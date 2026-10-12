@@ -1,0 +1,34 @@
+# Commit only:
+#   code/rules/*
+#   code/scripts/*
+#   notebooks/*/*.ipynb
+#   notebooks/*/*.py
+#
+# Everything else is ignored. The pattern is deny-all, then re-include along
+# each path: git will not re-include a file whose parent directory is still
+# excluded, so every directory on the way down needs its own negation.
+
+# --- nothing at the top level
+/*
+!/.gitignore
+
+# --- code: only rules/ and scripts/
+!/code/
+/code/*
+!/code/rules/
+!/code/scripts/
+
+# --- notebooks: the .ipynb and .py inside each per-figure directory
+!/notebooks/
+/notebooks/*
+!/notebooks/*/
+/notebooks/*/*
+!/notebooks/*/*.ipynb
+!/notebooks/*/*.py
+
+# --- never commit, wherever they appear
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+*.swp
+.snakemake*
